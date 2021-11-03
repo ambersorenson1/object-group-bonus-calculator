@@ -38,5 +38,53 @@ const employees = [
 
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
+// for (let i=0; i<employees.length; i++) {
+//   console.log(addToEmployeeFile(employees[i]));
+// }
+for (let employee of employees) {
+  console.log(addToEmployeeFile(employee), 'newObject')
+}
 
-console.log( employees );
+
+
+function addToEmployeeFile (employee){
+
+  let newObject = {
+    name: employee.name,
+    bonusPercentage: employee.bonusPercentage,
+    totalCompensation: employee.totalCompensation,
+    totalBonus: calculateBonus(employee),
+  }
+  return newObject;
+}
+// console.log(addToEmployeeFile(employee))
+function calculateBonus(employee){
+  let bonus = 0;
+  if (employee.reviewRating <= 2){
+    // console.log('You do not get a bonus!');
+    bonus = 0;
+  } else if ( employee.reviewRating === 3) {
+    // console.log(employee.annualSalary * .04);
+    bonus = 4;
+  } else if ( employee.reviewRating === 4) {
+    // console.log(employee.annualSalary * .06);
+    bonus = 6;
+  } else if ( employee.reviewRating === 5) {
+    // console.log(employee.annualSalary * .10);
+    bonus = 10;
+  }
+  if (employee.employeeNumber.length === 4){
+    // console.log(employee.annualSalary * .05);
+    bonus += 5;
+  }
+  if (employee.annualSalary > 65000) {
+    bonus -= 1;
+  }
+  if (bonus > 13 ){
+    bonus = 13;
+  }
+  else if (bonus < 0 ){
+    bonus = 0;
+  }
+  return +employee.annualSalary * (bonus / 100)
+}
